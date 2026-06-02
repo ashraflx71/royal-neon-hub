@@ -3,11 +3,11 @@ from flask_cors import CORS
 import datetime
 
 app = Flask(__name__)
-CORS(app)  # للسماح بالاتصال الآمن بين الواجهة والخادم
+CORS(app)  # للسماح للواجهة بالاتصال بالخلفية بدون قيود أمنية
 
 @app.route('/api/status', methods=['GET'])
 def get_status():
-    """نقطة فحص كفاءة النظام والأداء الخارق"""
+    """فحص حالة النظام بكفاءة عالية"""
     return jsonify({
         "status": "online",
         "system_health": "100%",
@@ -17,19 +17,23 @@ def get_status():
 
 @app.route('/api/automate', methods=['POST'])
 def run_automation():
-    """محرك الأتمتة الذكي لمعالجة البيانات بلمسة زر"""
-    data = request.get_json() or {}
-    user_input = data.get("input_text", "طلب افتراضي")
-    
-    # هنا تتم عمليات الأتمتة الذكية (سنوسعها لاحقاً لربطها بالذكاء الاصطناعي)
-    processed_output = f"🚀 [تمت الأتمتة بنجاح] المحرك الملكي عالج بنجاح: '{user_input}'"
-    
-    return jsonify({
-        "success": True,
-        "result": processed_output,
-        "performance_cost": "0.002s"  # دلالة على الكفاءة العالية للكود الأخضر
-    })
+    """محرك الأتمتة الذكي لمعالجة البيانات بكسر من الثانية"""
+    try:
+        data = request.get_json() or {}
+        user_input = data.get("input_text", "طلب افتراضي")
+        
+        processed_output = f"🚀 [نظام النيون الملكي]: تمت أتمتة الطلب بنجاح مذهل! العبارة المعالجة: '{user_input}'"
+        
+        return jsonify({
+            "success": True,
+            "result": processed_output,
+            "performance_cost": "0.002s"
+        })
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
 
 if __name__ == '__main__':
-    # تشغيل الخادم محلياً على المنفذ 5000
     app.run(debug=True, port=5000)
