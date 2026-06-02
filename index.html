@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Royal Neon Hub | منصة النيون الملكية</title>
     <style>
-        /* إعادة تعيين الأنماط الأساسية */
+        /* إعادة تعيين الأنماط الأساسية وترقية الخطوط */
         * {
             margin: 0;
             padding: 0;
@@ -25,7 +25,7 @@
             position: relative;
         }
 
-        /* تأثير التوهج الخلفي الخلفية */
+        /* تأثير التوهج الخلفي (Neon Glow Backend) - كود أخضر خفيف */
         body::before {
             content: '';
             position: absolute;
@@ -56,7 +56,7 @@
             z-index: 2;
         }
 
-        /* شعار المنصة */
+        /* شعار المنصة الملكي المصغر */
         .badge {
             display: inline-block;
             padding: 0.5rem 1.5rem;
@@ -71,7 +71,7 @@
             box-shadow: 0 0 15px rgba(0, 102, 255, 0.1);
         }
 
-        /* العنوان الرئيسي الملكي */
+        /* العنوان الرئيسي الفخم بتباين عالي */
         h1 {
             font-size: 3rem;
             font-weight: 900;
@@ -88,7 +88,7 @@
             -webkit-text-fill-color: initial;
         }
 
-        /* الوصف الفرعي */
+        /* النصوص الفرعية المريحة للعين */
         p {
             font-size: 1.2rem;
             color: #A0A0AB;
@@ -96,7 +96,7 @@
             line-height: 1.8;
         }
 
-        /* أزرار النيون التفاعلية */
+        /* أزرار النيون التفاعلية مع تأثيرات التحويم الملكية */
         .btn-neon {
             display: inline-block;
             padding: 1rem 2.5rem;
@@ -109,7 +109,7 @@
             cursor: pointer;
             text-decoration: none;
             box-shadow: 0 0 25px rgba(0, 255, 102, 0.4);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .btn-neon:hover {
@@ -118,7 +118,7 @@
             box-shadow: 0 0 40px rgba(0, 255, 102, 0.8);
         }
 
-        /* الميزات المصغرة */
+        /* شبكة استعراض الميزات الفنية */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -132,11 +132,13 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 1.5rem;
             border-radius: 12px;
-            transition: border 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .feature-card:hover {
             border-color: rgba(0, 102, 255, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
         .feature-card h3 {
@@ -148,6 +150,7 @@
         .feature-card p {
             font-size: 0.9rem;
             margin-bottom: 0;
+            color: #A0A0AB;
         }
     </style>
 </head>
@@ -163,26 +166,55 @@
         <div class="features-grid">
             <div class="feature-card">
                 <h3>أداء خارق</h3>
-                <p>تحميل فوري بكسر من الثانية بفضل تقنيات الكود الأخضر.</p>
+                <p>تحميل فوري بكسر من الثانية بفضل تقنيات الكود الأخضر النظيف.</p>
             </div>
             <div class="feature-card">
                 <h3>واجهة نيون</h3>
-                <p>تصميم مريح للعين يعتمد على أرقى معايير التباين اللوني.</p>
+                <p>تصميم فخم ومريح للعين يعتمد على أرقى معايير التباين اللوني.</p>
             </div>
             <div class="feature-card">
                 <h3>أتمتة ذكية</h3>
-                <p>محرك مدمج ينجز المهام المعقدة بدلاً منك بنقرة واحدة.</p>
+                <p>محرك مدمج بلغة Python ينجز المهام المعقدة بدلاً منك بنقرة واحدة.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // تفاعل أولي مبهر عند الضغط على الزر
-        document.getElementById('mainBtn').addEventListener('click', function(e) {
+        // ربط الواجهة بمحرك الأتمتة الخلفي (Python API)
+        document.getElementById('mainBtn').addEventListener('click', async function(e) {
             e.preventDefault();
-            alert('تم تفعيل المحرك بنجاح! جاهزون للانتقال للخطوة البرمجية التالية.');
+            const btn = this;
+            
+            // تحويل بصري مؤقت يعكس بدء المعالجة الذكية (وميض ملكي أزرق)
+            btn.innerText = "جاري الاتصال بالمحرك...";
+            btn.style.backgroundColor = "#0066FF";
+            btn.style.color = "#FFFFFF";
+            btn.style.boxShadow = "0 0 40px rgba(0, 102, 255, 0.8)";
+            
+            try {
+                // محاولة الاتصال بخادم الـ Python المحلي
+                const response = await fetch('http://127.0.0.1:5000/api/automate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ input_text: "تفعيل نظام الجيل القادم الملكي" })
+                });
+                
+                const result = await response.json();
+                
+                if(result.success) {
+                    alert(result.result + "\n⚡ كفاءة المعالجة الزرقاء: " + result.performance_cost);
+                }
+            } catch (error) {
+                // رسالة ذكية في حال لم يتم تشغيل خادم البايثون بعد
+                alert("الواجهة الملكية تعمل بنجاح مذهل! 🟩\n\n(تنبيه القائد: لتفعيل الأتمتة الكاملة، تأكد من تشغيل خادم Python عبر ملف app.py).");
+            } finally {
+                // إعادة الزر لشكله النيوني الأصلي المشع
+                btn.innerText = "ابدأ التجربة المبهرة";
+                btn.style.backgroundColor = "#00FF66";
+                btn.style.color = "#0B0B0F";
+                btn.style.boxShadow = "0 0 25px rgba(0, 255, 102, 0.4)";
+            }
         });
     </script>
 </body>
-                                                                           </html>
-                                                                           
+</html>
