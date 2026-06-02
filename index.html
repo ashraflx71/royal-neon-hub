@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Royal Neon Hub | منصة النيون الملكية</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#00FF66">
+    
     <style>
         /* إعادة تعيين الأنماط الأساسية وترقية الخطوط */
         * {
@@ -25,7 +28,7 @@
             position: relative;
         }
 
-        /* تأثير التوهج الخلفي (Neon Glow Backend) - كود أخضر خفيف */
+        /* تأثير التوهج الخلفي (Neon Glow Background) */
         body::before {
             content: '';
             position: absolute;
@@ -96,7 +99,7 @@
             line-height: 1.8;
         }
 
-        /* أزرار النيون التفاعلية مع تأثيرات التحويم الملكية */
+        /* أزرار النيون التفاعلية */
         .btn-neon {
             display: inline-block;
             padding: 1rem 2.5rem;
@@ -180,19 +183,17 @@
     </div>
 
     <script>
-        // ربط الواجهة بمحرك الأتمتة الخلفي (Python API)
+        // 1. ربط الواجهة بمحرك الأتمتة الخلفي (Python API)
         document.getElementById('mainBtn').addEventListener('click', async function(e) {
             e.preventDefault();
             const btn = this;
             
-            // تحويل بصري مؤقت يعكس بدء المعالجة الذكية (وميض ملكي أزرق)
             btn.innerText = "جاري الاتصال بالمحرك...";
             btn.style.backgroundColor = "#0066FF";
             btn.style.color = "#FFFFFF";
             btn.style.boxShadow = "0 0 40px rgba(0, 102, 255, 0.8)";
             
             try {
-                // محاولة الاتصال بخادم الـ Python المحلي
                 const response = await fetch('http://127.0.0.1:5000/api/automate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -202,19 +203,26 @@
                 const result = await response.json();
                 
                 if(result.success) {
-                    alert(result.result + "\n⚡ كفاءة المعالجة الزرقاء: " + result.performance_cost);
+                    alert(result.result + "\n⚡ كفاءة المعالجة: " + result.performance_cost);
                 }
             } catch (error) {
-                // رسالة ذكية في حال لم يتم تشغيل خادم البايثون بعد
-                alert("الواجهة الملكية تعمل بنجاح مذهل! 🟩\n\n(تنبيه القائد: لتفعيل الأتمتة الكاملة، تأكد من تشغيل خادم Python عبر ملف app.py).");
+                alert("الواجهة الملكية تعمل بنجاح مذهل! 🟩\n\n(تنبيه القائد: لتفعيل الأتمتة الكاملة، تأكد من تشغيل خادم Python محلياً عبر ملف app.py).");
             } finally {
-                // إعادة الزر لشكله النيوني الأصلي المشع
                 btn.innerText = "ابدأ التجربة المبهرة";
                 btn.style.backgroundColor = "#00FF66";
                 btn.style.color = "#0B0B0F";
                 btn.style.boxShadow = "0 0 25px rgba(0, 255, 102, 0.4)";
             }
         });
+
+        // 2. تسجيل الـ Service Worker لتمكين الـ PWA (التثبيت على الهاتف)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('تم تسجيل محرك PWA بنجاح!', reg))
+                    .catch(err => console.log('عذراً، فشل تسجيل المحرك:', err));
+            });
+        }
     </script>
 </body>
 </html>
