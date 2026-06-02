@@ -4,7 +4,7 @@ const ASSETS = [
   '/manifest.json'
 ];
 
-// تثبيت عامل الخدمة وتخزين الملفات الأساسية
+// تثبيت الكاش عند التشغيل الأول لضمان الكفاءة العالية
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -13,7 +13,7 @@ self.addEventListener('install', (e) => {
   );
 });
 
-// استدعاء الملفات من الكاش لسرعة خارقة (بكسر من الثانية)
+// استرجاع الملفات بسرعة خارقة حتى عند انقطاع الشبكة
 self.addEventListener('fetch', (e) => {
   e.respondWith(
     caches.match(e.request).then((response) => {
